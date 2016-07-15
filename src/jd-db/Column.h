@@ -34,6 +34,8 @@ public:
 	Column &setDefault(const QVariant &def) { m_default = def; return *this; }
 
 	QString sql() const;
+	QVariant toVariant(const QVariant &dbVariant) const;
+	QVariant toDb(const QVariant &variant) const;
 
 	QString name() const { return m_name; }
 	QString type() const { return m_type; }

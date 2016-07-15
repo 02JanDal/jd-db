@@ -7,7 +7,7 @@
 Table::Table(const SqlDialectType type, const QString &table)
 	: m_sqltype(type), m_tableName(table)
 {
-	add("id", "INTEGER");
+	add("id", "UUID");
 	add("updated_at", "TIMESTAMP");
 }
 
