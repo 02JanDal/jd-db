@@ -19,11 +19,3 @@ Column &Table::add(const Table &other)
 	m_columns.insert(other.tableName() + "_id", Column(other));
 	return m_columns[other.tableName() + "_id"];
 }
-
-QString Table::columnsList() const
-{
-	return JD::Util::Functional::collection(m_columns.values())
-			.map([](const Column &c) { return c.name(); })
-			.join(',');
-}
-

@@ -20,6 +20,5 @@ public:
 	const Column column(const QString &name) const { return m_columns.value(name); }
 	bool contains(const QString &column) const { return m_columns.contains(column); }
 
-	QString columnsList() const;
 	QString tableName() const { return m_tableName; }
 };
