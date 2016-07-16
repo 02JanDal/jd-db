@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Table.h"
+#include "jd-db/schema/Table.h"
 
 class SelectBuilder
 {
@@ -25,3 +25,5 @@ private:
 	int m_limit = -1;
 	int m_offset = -1;
 };
+
+SelectBuilder selectFrom(const Table &table, const QVector<QString> &columns = QVector<QString>());

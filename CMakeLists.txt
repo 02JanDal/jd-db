@@ -19,26 +19,39 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
 
 include(Helpers)
 
-set(SRC
-	Database.h
-	Database.cpp
+set(SRC_SCHEMA
 	Column.h
 	Column.cpp
 	Table.h
 	Table.cpp
-	SelectBuilder.h
-	SelectBuilder.cpp
 )
-prepend_to_list(SRC src/jd-db/)
-
-add_library(jd-db ${SRC})
-target_link_libraries(jd-db Qt5::Core Qt5::Sql jd-util)
-target_include_directories(jd-db PUBLIC
+prepend_to_list(SRC_SCHEMA src/jd-db/schema/)
+add_library(jd-db-schema ${SRC_SCHEMA})
+target_link_libraries(jd-db-schema Qt5::Core jd-util)
+target_include_directories(jd-db-schema PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 	$<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS jd-db EXPORT jd-db DESTINATION lib)
+set(SRC_SQL
+	Database.h
+	Database.cpp
+	Dialects.h
+	Dialects.cpp
+	SelectBuilder.h
+	SelectBuilder.cpp
+	CreateBuilder.h
+	CreateBuilder.cpp
+)
+prepend_to_list(SRC_SQL src/jd-db/sql/)
+add_library(jd-db-sql ${SRC_SQL})
+target_link_libraries(jd-db-sql Qt5::Core Qt5::Sql jd-util jd-db-schema)
+target_include_directories(jd-db-sql PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+	$<INSTALL_INTERFACE:include>
+)
+
+install(TARGETS jd-db-sql jd-db-schema EXPORT jd-db DESTINATION lib)
 install(DIRECTORY src/jd-db DESTINATION include/jd-db FILES_MATCHING PATTERN "*.h")
 install(EXPORT jd-db NAMESPACE jd_ DESTINATION lib/cmake)
 install(DIRECTORY cmake/ DESTINATION lib/cmake/jd-db)

@@ -46,3 +46,8 @@ QString SelectBuilder::toSql() const
 							 : " LIMIT " + QString::number(m_limit) + (m_offset == -1 ? ""
 																					  : " OFFSET " + QString::number(m_offset)));
 }
+
+SelectBuilder selectFrom(const Table &table, const QVector<QString> &columns)
+{
+	return SelectBuilder(table, columns.isEmpty() ? table.columns().keys().toVector() : columns);
+}
